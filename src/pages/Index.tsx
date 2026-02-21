@@ -8,14 +8,12 @@ import Projects from "@/components/Projects";
 import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import ScrollProgress from "@/components/ScrollProgress";
 import BackToTop from "@/components/BackToTop";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 const Index = () => {
   return (
     <div className="bg-background min-h-screen">
-      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />

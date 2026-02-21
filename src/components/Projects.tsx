@@ -1,125 +1,248 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { FiExternalLink, FiGithub } from "react-icons/fi";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState } from "react";
+import { FiExternalLink, FiGithub, FiChevronDown, FiChevronUp, FiCode, FiBriefcase } from "react-icons/fi";
 import { projects } from "@/data/portfolio";
+import ThreeBadge from "./ThreeBadge";
 
-gsap.registerPlugin(ScrollTrigger);
+type Tab = "company" | "personal";
 
-const filters = ["all", "fullstack", "mini"];
+const companyProjects = projects.filter((p) => p.company);
+const personalProjects = projects.filter((p) => !p.company);
 
+// ── Contributions accordion ──────────────────────────────────────────────────
+const Contributions = ({ items }: { items: string[] }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-4 border-t border-border/40 pt-3">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between text-xs font-medium text-primary/80 hover:text-primary transition-colors"
+      >
+        <span>Key Contributions</span>
+        {open ? <FiChevronUp size={13} /> : <FiChevronDown size={13} />}
+      </button>
+
+      {open && (
+        <ul className="mt-3 space-y-2">
+          {items.map((c, i) => (
+            <li key={i} className="flex items-start gap-2.5 text-xs text-muted-foreground leading-relaxed">
+              <span className="mt-0.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60" />
+              {c}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+// ── Single project card ──────────────────────────────────────────────────────
+const ProjectCard = ({
+  project,
+  index,
+  isCompany,
+}: {
+  project: (typeof projects)[0];
+  index: number;
+  isCompany: boolean;
+}) => (
+  <div
+    className="project-card group relative flex flex-col rounded-2xl bg-card border border-border/50 overflow-hidden
+               hover:border-primary/30 hover:shadow-[0_0_30px_hsl(217_91%_60%/0.12)] transition-all duration-400"
+  >
+    {/* Gradient top accent line */}
+    <div
+      className="h-[2px] w-full"
+      style={{
+        background: isCompany
+          ? "linear-gradient(90deg, hsl(38 92% 50%), hsl(48 96% 60%))"
+          : "linear-gradient(90deg, hsl(217 91% 60%), hsl(192 91% 43%))",
+      }}
+    />
+
+    <div className="flex flex-col flex-1 p-6">
+      {/* Header row */}
+      <div className="flex items-start justify-between gap-3 mb-4">
+        <div className="flex-1 min-w-0">
+          {/* Index number */}
+          <span className="text-[11px] font-mono text-muted-foreground/50 mb-1 block">
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <h3 className="text-base font-heading font-semibold text-foreground leading-snug group-hover:text-primary transition-colors duration-300">
+            {project.title}
+          </h3>
+        </div>
+
+        {/* Links */}
+        <div className="flex items-center gap-1.5 flex-shrink-0">
+          {"github" in project && project.github && (
+            <a
+              href={project.github as string}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-border/60
+                         text-muted-foreground hover:text-primary hover:border-primary/50
+                         hover:bg-primary/5 transition-all duration-200"
+              title="View on GitHub"
+            >
+              <FiGithub size={14} />
+            </a>
+          )}
+          {"live" in project && project.live && (
+            <a
+              href={project.live as string}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-border/60
+                         text-muted-foreground hover:text-primary hover:border-primary/50
+                         hover:bg-primary/5 transition-all duration-200"
+              title="View Live"
+            >
+              <FiExternalLink size={14} />
+            </a>
+          )}
+          {isCompany && (
+            <span
+              className="flex h-8 items-center gap-1.5 px-2.5 rounded-lg border text-[11px] font-medium
+                         border-amber-500/25 bg-amber-500/8 text-amber-400"
+            >
+              <FiBriefcase size={11} />
+              Company
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Role badge (company only) */}
+      {"role" in project && project.role && (
+        <div className="mb-3">
+          <span className="text-[11px] px-2.5 py-1 rounded-full bg-primary/8 text-primary border border-primary/15 font-medium">
+            {project.role as string}
+          </span>
+        </div>
+      )}
+
+      {/* Description */}
+      <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+        {project.description}
+      </p>
+
+      {/* Contributions accordion */}
+      {"contributions" in project &&
+        Array.isArray(project.contributions) &&
+        project.contributions.length > 0 && (
+          <Contributions items={project.contributions as string[]} />
+        )}
+
+      {/* Tech tags */}
+      <div className="flex flex-wrap gap-1.5 mt-5">
+        {project.tech.map((t) => (
+          <span
+            key={t}
+            className="text-[11px] px-2 py-0.5 rounded-md bg-muted text-muted-foreground border border-border/50
+                       hover:border-primary/30 hover:text-primary transition-colors duration-200"
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+// ── Tab button ───────────────────────────────────────────────────────────────
+const TabBtn = ({
+  active,
+  onClick,
+  icon: Icon,
+  label,
+  count,
+}: {
+  active: boolean;
+  onClick: () => void;
+  icon: React.ElementType;
+  label: string;
+  count: number;
+}) => (
+  <button
+    onClick={onClick}
+    className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-250
+      ${active
+        ? "bg-primary text-primary-foreground shadow-[0_0_20px_hsl(217_91%_60%/0.35)]"
+        : "bg-card border border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/30"
+      }`}
+  >
+    <Icon size={15} />
+    {label}
+    <span
+      className={`text-xs px-1.5 py-0.5 rounded-full font-mono ${active ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
+        }`}
+    >
+      {count}
+    </span>
+  </button>
+);
+
+// ── Main section ─────────────────────────────────────────────────────────────
 const Projects = () => {
-  const [active, setActive] = useState("all");
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  const filtered = active === "all" ? projects : projects.filter((p) => p.category === active);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    const cards = ref.current.querySelectorAll(".project-card");
-    gsap.from(cards, {
-      opacity: 0,
-      y: 50,
-      scale: 0.95,
-      stagger: 0.15,
-      duration: 0.7,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ref.current,
-        start: "top bottom-=100",
-      },
-    });
-    return () => ScrollTrigger.getAll().forEach((st) => st.kill());
-  }, []);
+  const [activeTab, setActiveTab] = useState<Tab>("company");
+  const displayed = activeTab === "company" ? companyProjects : personalProjects;
 
   return (
-    <section id="projects" className="py-24 relative">
-      <div className="section-container" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="mb-12"
-        >
+    <section id="projects" className="py-24 relative overflow-hidden">
+      <div className="section-container">
+        {/* Section heading */}
+        <div className="mb-10">
           <p className="text-primary text-sm tracking-[0.2em] uppercase mb-2 font-body">Portfolio</p>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6">
-            Featured <span className="gradient-text">Projects</span>
-          </h2>
-
-          <div className="flex gap-3">
-            {filters.map((f) => (
-              <button
-                key={f}
-                onClick={() => setActive(f)}
-                className={`px-4 py-2 text-sm rounded-full capitalize transition-all duration-300 ${
-                  active === f
-                    ? "glow-button !py-2 !px-4"
-                    : "border border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/30"
-                }`}
-              >
-                {f === "all" ? "All" : f === "fullstack" ? "Full Stack" : "Mini"}
-              </button>
-            ))}
+          <div className="flex items-center gap-4 mb-2">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold">
+              Featured <span className="gradient-text">Projects</span>
+            </h2>
+            <ThreeBadge />
           </div>
-        </motion.div>
+          <p className="text-muted-foreground text-sm max-w-xl">
+            A selection of professional work and personal builds — spanning full-stack platforms, automation tools, and interactive UIs.
+          </p>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project) => (
-              <motion.div
-                key={project.title}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4 }}
-                className="project-card glow-card p-6 flex flex-col hover:scale-[1.02] transition-transform duration-300"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-xl font-heading font-semibold text-foreground">{project.title}</h3>
-                  <div className="flex gap-2">
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-lg border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
-                      >
-                        <FiGithub size={16} />
-                      </a>
-                    )}
-                    {project.live && (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-lg border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
-                      >
-                        <FiExternalLink size={16} />
-                      </a>
-                    )}
-                  </div>
-                </div>
+        {/* Tab switcher */}
+        <div className="flex gap-3 mb-10">
+          <TabBtn
+            active={activeTab === "company"}
+            onClick={() => setActiveTab("company")}
+            icon={FiBriefcase}
+            label="Company"
+            count={companyProjects.length}
+          />
+          <TabBtn
+            active={activeTab === "personal"}
+            onClick={() => setActiveTab("personal")}
+            icon={FiCode}
+            label="Personal"
+            count={personalProjects.length}
+          />
+        </div>
 
-                <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
-                  {project.description}
-                </p>
+        {/* Context label */}
+        {activeTab === "company" && (
+          <div className="flex items-center gap-2 mb-6">
+            <div className="h-px flex-1 bg-border/40" />
+            <span className="text-xs text-muted-foreground px-3 py-1.5 rounded-full border border-border/50 bg-card">
+              Built at MindOverMatter Technologies — source code is proprietary
+            </span>
+            <div className="h-px flex-1 bg-border/40" />
+          </div>
+        )}
 
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+        {/* Cards grid */}
+        <div className="grid md:grid-cols-2 gap-5">
+          {displayed.map((project, i) => (
+            <ProjectCard
+              key={project.title}
+              project={project}
+              index={i}
+              isCompany={activeTab === "company"}
+            />
+          ))}
         </div>
       </div>
     </section>

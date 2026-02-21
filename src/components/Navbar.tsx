@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
 
 const navLinks = [
@@ -21,13 +20,9 @@ const Navbar = () => {
   }, []);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
-      }`}
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
+        }`}
     >
       <div className="section-container flex items-center justify-between h-16">
         <a href="#" className="text-xl font-heading font-bold gradient-text">
@@ -54,6 +49,7 @@ const Navbar = () => {
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="md:hidden text-foreground"
+          aria-label="Toggle menu"
         >
           {mobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
@@ -61,11 +57,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-card/95 backdrop-blur-xl border-b border-border/50 pb-4"
-        >
+        <div className="md:hidden bg-card/95 backdrop-blur-xl border-b border-border/50 pb-4">
           {navLinks.map((l) => (
             <a
               key={l.href}
@@ -76,9 +68,9 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
-        </motion.div>
+        </div>
       )}
-    </motion.nav>
+    </nav>
   );
 };
 

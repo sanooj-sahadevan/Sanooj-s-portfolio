@@ -67,7 +67,12 @@
     @apply bg-background text-foreground font-body antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading;
   }
 }
@@ -86,7 +91,7 @@
   .gradient-border {
     @apply relative;
     background: linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
-                var(--gradient-blue-cyan) border-box;
+      var(--gradient-blue-cyan) border-box;
     border: 1px solid transparent;
   }
 
@@ -123,7 +128,7 @@
   }
 
   .section-container {
-    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   .scroll-progress {
@@ -140,8 +145,13 @@
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-marquee {
