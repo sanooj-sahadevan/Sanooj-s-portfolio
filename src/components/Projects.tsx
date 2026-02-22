@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FiExternalLink, FiGithub, FiChevronDown, FiChevronUp, FiCode, FiBriefcase } from "react-icons/fi";
 import { projects } from "@/data/portfolio";
 import ThreeBadge from "./ThreeBadge";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Tab = "company" | "personal";
 
@@ -21,16 +22,23 @@ const Contributions = ({ items }: { items: string[] }) => {
         {open ? <FiChevronUp size={13} /> : <FiChevronDown size={13} />}
       </button>
 
-      {open && (
-        <ul className="mt-3 space-y-2">
-          {items.map((c, i) => (
-            <li key={i} className="flex items-start gap-2.5 text-xs text-muted-foreground leading-relaxed">
-              <span className="mt-0.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60" />
-              {c}
-            </li>
-          ))}
-        </ul>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="mt-3 space-y-2 overflow-hidden"
+          >
+            {items.map((c, i) => (
+              <li key={i} className="flex items-start gap-2.5 text-xs text-muted-foreground leading-relaxed">
+                <span className="mt-0.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60" />
+                {c}
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
@@ -45,7 +53,13 @@ const ProjectCard = ({
   index: number;
   isCompany: boolean;
 }) => (
-  <div
+  <motion.div
+    layout
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
+    whileHover={{ y: -5 }}
     className="project-card group relative flex flex-col rounded-2xl bg-card border border-border/50 overflow-hidden
                hover:border-primary/30 hover:shadow-[0_0_30px_hsl(217_91%_60%/0.12)] transition-all duration-400"
   >
@@ -146,7 +160,7 @@ const ProjectCard = ({
         ))}
       </div>
     </div>
-  </div>
+  </motion.div>
 );
 
 // ── Tab button ───────────────────────────────────────────────────────────────
@@ -191,7 +205,13 @@ const Projects = () => {
     <section id="projects" className="py-24 relative overflow-hidden">
       <div className="section-container">
         {/* Section heading */}
-        <div className="mb-10">
+        <motion.div
+          className="mb-10"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <p className="text-primary text-sm tracking-[0.2em] uppercase mb-2 font-body">Portfolio</p>
           <div className="flex items-center gap-4 mb-2">
             <h2 className="text-3xl md:text-4xl font-heading font-bold">
@@ -202,7 +222,7 @@ const Projects = () => {
           <p className="text-muted-foreground text-sm max-w-xl">
             A selection of professional work and personal builds — spanning full-stack platforms, automation tools, and interactive UIs.
           </p>
-        </div>
+        </motion.div>
 
         {/* Tab switcher */}
         <div className="flex gap-3 mb-10">
@@ -224,26 +244,35 @@ const Projects = () => {
 
         {/* Context label */}
         {activeTab === "company" && (
-          <div className="flex items-center gap-2 mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-2 mb-6"
+          >
             <div className="h-px flex-1 bg-border/40" />
             <span className="text-xs text-muted-foreground px-3 py-1.5 rounded-full border border-border/50 bg-card">
               Built at MindOverMatter Technologies — source code is proprietary
             </span>
             <div className="h-px flex-1 bg-border/40" />
-          </div>
+          </motion.div>
         )}
 
         {/* Cards grid */}
-        <div className="grid md:grid-cols-2 gap-5">
-          {displayed.map((project, i) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              index={i}
-              isCompany={activeTab === "company"}
-            />
-          ))}
-        </div>
+        <motion.div
+          layout
+          className="grid md:grid-cols-2 gap-5"
+        >
+          <AnimatePresence mode="popLayout">
+            {displayed.map((project, i) => (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                index={i}
+                isCompany={activeTab === "company"}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );
