@@ -38,7 +38,7 @@ const Skills = () => {
                 </motion.div>
 
                 <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
@@ -47,16 +47,16 @@ const Skills = () => {
                     {Object.entries(skills).map(([category, items]) => (
                         <motion.div
                             key={category}
-                            className="glow-card p-6"
+                            className="glow-card p-5 sm:p-6"
                             variants={fadeIn}
                             whileHover={{ y: -5, borderColor: "rgba(var(--primary), 0.3)" }}
                         >
-                            <h3 className="text-xl font-heading font-bold mb-4 text-primary">{category}</h3>
+                            <h3 className="text-lg sm:text-xl font-heading font-bold mb-4 text-primary">{category}</h3>
                             <div className="flex flex-wrap gap-2">
                                 {items.map((skill) => (
                                     <motion.span
                                         key={skill}
-                                        className="text-xs px-3 py-1.5 rounded-full bg-muted border border-border/50 text-muted-foreground hover:border-primary/50 hover:text-primary transition-all cursor-default"
+                                        className="text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-muted border border-border/50 text-muted-foreground hover:border-primary/50 hover:text-primary transition-all cursor-default"
                                         whileHover={{ scale: 1.05, backgroundColor: "rgba(var(--primary), 0.1)" }}
                                     >
                                         {skill}

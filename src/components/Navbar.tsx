@@ -78,25 +78,45 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-card/95 backdrop-blur-xl border-b border-border/50 overflow-hidden"
+            initial={{ opacity: 0, scaleY: 0 }}
+            animate={{ opacity: 1, scaleY: 1 }}
+            exit={{ opacity: 0, scaleY: 0 }}
+            style={{ originY: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden bg-background/95 backdrop-blur-2xl border-b border-border/50 overflow-hidden"
           >
-            <div className="pb-4">
+            <div className="flex flex-col p-6 gap-4">
               {navLinks.map((l, i) => (
                 <motion.a
                   key={l.href}
                   href={l.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block px-6 py-3 text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
+                  transition={{ delay: 0.1 + i * 0.1 }}
                 >
                   {l.label}
+                  <div className="h-px flex-1 mx-4 bg-border/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <motion.span
+                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                    initial={{ x: -10 }}
+                    whileHover={{ x: 0 }}
+                  >
+                    →
+                  </motion.span>
                 </motion.a>
               ))}
+              <motion.a
+                href="#contact"
+                className="glow-button text-center mt-4"
+                onClick={() => setMobileOpen(false)}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 + navLinks.length * 0.1 }}
+              >
+                Hire Me
+              </motion.a>
             </div>
           </motion.div>
         )}

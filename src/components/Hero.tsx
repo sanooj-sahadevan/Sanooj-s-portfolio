@@ -43,14 +43,14 @@ const Hero = () => {
         animate="visible"
       >
         <motion.p
-          className="text-primary font-body text-sm tracking-[0.3em] uppercase mb-4"
+          className="text-primary font-body text-[10px] xs:text-xs sm:text-sm tracking-[0.3em] uppercase mb-4"
           variants={itemVariants}
         >
           Full Stack MERN Developer
         </motion.p>
 
         <motion.h1
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-bold mb-6"
+          className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-bold mb-6 tracking-tight"
           variants={itemVariants}
         >
           Hi, I'm{" "}
@@ -58,7 +58,7 @@ const Hero = () => {
         </motion.h1>
 
         <motion.p
-          className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed px-4 sm:px-0"
           variants={itemVariants}
         >
           I’m a full‑stack MERN developer crafting scalable, secure, and high‑performance web applications

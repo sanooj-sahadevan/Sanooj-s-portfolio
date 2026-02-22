@@ -73,15 +73,15 @@ const ProjectCard = ({
       }}
     />
 
-    <div className="flex flex-col flex-1 p-6">
+    <div className="flex flex-col flex-1 p-4 sm:p-6">
       {/* Header row */}
       <div className="flex items-start justify-between gap-3 mb-4">
         <div className="flex-1 min-w-0">
           {/* Index number */}
-          <span className="text-[11px] font-mono text-muted-foreground/50 mb-1 block">
+          <span className="text-[10px] sm:text-[11px] font-mono text-muted-foreground/50 mb-1 block">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <h3 className="text-base font-heading font-semibold text-foreground leading-snug group-hover:text-primary transition-colors duration-300">
+          <h3 className="text-sm sm:text-base font-heading font-semibold text-foreground leading-snug group-hover:text-primary transition-colors duration-300 line-clamp-1">
             {project.title}
           </h3>
         </div>
@@ -93,12 +93,12 @@ const ProjectCard = ({
               href={project.github as string}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-border/60
+              className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg border border-border/60
                          text-muted-foreground hover:text-primary hover:border-primary/50
                          hover:bg-primary/5 transition-all duration-200"
               title="View on GitHub"
             >
-              <FiGithub size={14} />
+              <FiGithub size={13} />
             </a>
           )}
           {"live" in project && project.live && (
@@ -106,21 +106,21 @@ const ProjectCard = ({
               href={project.live as string}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-border/60
+              className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg border border-border/60
                          text-muted-foreground hover:text-primary hover:border-primary/50
                          hover:bg-primary/5 transition-all duration-200"
               title="View Live"
             >
-              <FiExternalLink size={14} />
+              <FiExternalLink size={13} />
             </a>
           )}
           {isCompany && (
             <span
-              className="flex h-8 items-center gap-1.5 px-2.5 rounded-lg border text-[11px] font-medium
+              className="flex h-7 sm:h-8 items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 rounded-lg border text-[9px] sm:text-[11px] font-medium
                          border-amber-500/25 bg-amber-500/8 text-amber-400"
             >
-              <FiBriefcase size={11} />
-              Company
+              <FiBriefcase size={10} className="hidden xs:block" />
+              Co.
             </span>
           )}
         </div>
@@ -129,14 +129,14 @@ const ProjectCard = ({
       {/* Role badge (company only) */}
       {"role" in project && project.role && (
         <div className="mb-3">
-          <span className="text-[11px] px-2.5 py-1 rounded-full bg-primary/8 text-primary border border-primary/15 font-medium">
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/8 text-primary border border-primary/15 font-medium">
             {project.role as string}
           </span>
         </div>
       )}
 
       {/* Description */}
-      <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-1 line-clamp-3 sm:line-clamp-none">
         {project.description}
       </p>
 
@@ -148,11 +148,11 @@ const ProjectCard = ({
         )}
 
       {/* Tech tags */}
-      <div className="flex flex-wrap gap-1.5 mt-5">
+      <div className="flex flex-wrap gap-1 mt-4 sm:mt-5">
         {project.tech.map((t) => (
           <span
             key={t}
-            className="text-[11px] px-2 py-0.5 rounded-md bg-muted text-muted-foreground border border-border/50
+            className="text-[9px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 rounded-md bg-muted text-muted-foreground border border-border/50
                        hover:border-primary/30 hover:text-primary transition-colors duration-200"
           >
             {t}
@@ -225,7 +225,7 @@ const Projects = () => {
         </motion.div>
 
         {/* Tab switcher */}
-        <div className="flex gap-3 mb-10">
+        <div className="flex flex-wrap gap-2 sm:gap-3 mb-10">
           <TabBtn
             active={activeTab === "company"}
             onClick={() => setActiveTab("company")}

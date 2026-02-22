@@ -29,30 +29,30 @@ const Experience = () => {
 
                 <div className="relative">
                     {/* Vertical line */}
-                    <div className="absolute left-[19px] top-0 bottom-0 w-px bg-border/50" />
+                    <div className="absolute left-[17px] sm:left-[19px] top-0 bottom-0 w-px bg-border/50" />
 
-                    <div className="space-y-10">
+                    <div className="space-y-8 sm:space-y-10">
                         {sorted.map((item) => (
                             <div
                                 key={item.title}
-                                className="flex gap-6 items-start"
+                                className="flex gap-4 sm:gap-6 items-start"
                             >
                                 {/* Dot */}
-                                <div className="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-muted border border-border/50 flex items-center justify-center shadow-[0_0_15px_hsl(217_91%_60%/0.1)]">
-                                    <FiBookOpen size={16} className="text-primary" />
+                                <div className="relative z-10 flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-muted border border-border/50 flex items-center justify-center shadow-[0_0_15px_hsl(217_91%_60%/0.1)]">
+                                    <FiBookOpen size={14} className="text-primary" />
                                 </div>
 
-                                <div className="glow-card p-5 flex-1 hover:border-primary/30 transition-colors duration-300">
-                                    <div className="flex items-center justify-between gap-2">
-                                        <h3 className="font-heading font-semibold text-foreground text-lg leading-tight">{item.title}</h3>
+                                <div className="glow-card p-4 sm:p-5 flex-1 hover:border-primary/30 transition-colors duration-300">
+                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                        <h3 className="font-heading font-semibold text-foreground text-base sm:text-lg leading-tight">{item.title}</h3>
                                         {("type" in item) && (
-                                            <span className="flex-shrink-0 text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 capitalize">
+                                            <span className="w-fit text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 capitalize">
                                                 {item.type}
                                             </span>
                                         )}
                                     </div>
-                                    <p className="text-muted-foreground text-sm mt-1">{item.institution}</p>
-                                    {"period" in item && <p className="text-muted-foreground text-xs mt-1">{(item as any).period}</p>}
+                                    <p className="text-muted-foreground text-xs sm:text-sm mt-1">{item.institution}</p>
+                                    {"period" in item && <p className="text-muted-foreground text-[10px] sm:text-xs mt-1">{(item as any).period}</p>}
                                 </div>
                             </div>
                         ))}

@@ -39,17 +39,17 @@ const Stats = () => {
     return (
         <section className="py-20 bg-muted/30 overflow-hidden">
             <div className="section-container" ref={statsRef}>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
                     {stats.map((stat) => (
                         <div
                             key={stat.label}
-                            className="text-center"
+                            className="text-center p-2"
                         >
-                            <h3 className="text-4xl md:text-5xl font-heading font-bold gradient-text mb-2">
+                            <h3 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold gradient-text mb-1 sm:mb-2">
                                 <span className="stat-value">0</span>
                                 {stat.suffix || "+"}
                             </h3>
-                            <p className="text-sm text-muted-foreground uppercase tracking-wider font-medium">
+                            <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground uppercase tracking-wider font-medium">
                                 {stat.label}
                             </p>
                         </div>

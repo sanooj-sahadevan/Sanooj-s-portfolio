@@ -36,19 +36,19 @@ const About = () => {
                     </h2>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, margin: "-100px" }}
                         variants={staggerContainer}
                     >
-                        <motion.p className="text-muted-foreground leading-relaxed text-lg mb-8" variants={fadeIn}>
+                        <motion.p className="text-muted-foreground leading-relaxed text-base sm:text-lg mb-8" variants={fadeIn}>
                             MERN Stack developer with a strong foundation in building scalable web applications.
                             Experienced in designing RESTful APIs and deploying cloud-based solutions. Focused on
                             contributing to impactful and efficient applications.
                         </motion.p>
-                        <motion.div className="grid grid-cols-2 gap-4" variants={staggerContainer}>
+                        <motion.div className="grid grid-cols-1 xs:grid-cols-2 gap-4" variants={staggerContainer}>
                             {[
                                 { label: "Location", value: "India" },
                                 { label: "Email", value: "sanusahadev007@gmail.com" },
@@ -61,7 +61,7 @@ const About = () => {
                                     variants={fadeIn}
                                     whileHover={{ y: -5, borderColor: "rgba(var(--primary), 0.3)" }}
                                 >
-                                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{item.label}</p>
+                                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{item.label}</p>
                                     <p className="text-sm font-medium text-foreground truncate">{item.value}</p>
                                 </motion.div>
                             ))}
@@ -75,7 +75,7 @@ const About = () => {
                         viewport={{ once: true, margin: "-100px" }}
                         variants={fadeIn}
                     >
-                        <div className="glow-card p-8 space-y-6">
+                        <div className="glow-card p-6 sm:p-8 space-y-6">
                             {[
                                 { number: "2+", label: "Projects Deployed" },
                                 { number: "6+", label: "Technologies Mastered" },
@@ -85,8 +85,8 @@ const About = () => {
                                     key={stat.label}
                                     className="flex items-center gap-4 group"
                                 >
-                                    <span className="text-3xl font-heading font-bold gradient-text group-hover:scale-110 transition-transform duration-300">{stat.number}</span>
-                                    <span className="text-muted-foreground">{stat.label}</span>
+                                    <span className="text-2xl sm:text-3xl font-heading font-bold gradient-text group-hover:scale-110 transition-transform duration-300">{stat.number}</span>
+                                    <span className="text-sm sm:text-base text-muted-foreground">{stat.label}</span>
                                 </div>
                             ))}
                         </div>
