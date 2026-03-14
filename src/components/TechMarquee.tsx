@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import { skills } from "@/data/portfolio";
 import { gsap } from "gsap";
+import { motion } from "framer-motion";
 
 const TechMarquee = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,7 +37,13 @@ const TechMarquee = () => {
   }, []);
 
   return (
-    <section className="py-12 overflow-hidden border-y border-border/30 relative">
+    <motion.section
+      className="py-12 overflow-hidden border-y border-border/30 relative"
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6 }}
+    >
       {/* Gradient fade edges */}
       <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
       <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
@@ -51,7 +58,7 @@ const TechMarquee = () => {
           </span>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 };
 
