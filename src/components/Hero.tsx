@@ -71,7 +71,16 @@ const Hero = () => {
           <a href="#projects" className="glow-button text-center">
             View Projects
           </a>
-          <a href="#contact" className="outline-glow-button text-center">
+          <a
+            href="/Sanooj-Resume.pdf"
+            download="Sanooj-S-Resume.pdf"
+            className="outline-glow-button text-center"
+            onClick={(event) => {
+              if (!window.confirm("Do you want to download my resume?")) {
+                event.preventDefault();
+              }
+            }}
+          >
             Download Resume
           </a>
         </motion.div>

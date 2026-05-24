@@ -61,8 +61,8 @@ const ProjectCard = ({
     transition={{ duration: 0.5, delay: index * 0.1 }}
     whileHover={{ y: -5 }}
     className="project-card group relative flex flex-col rounded-2xl bg-card border border-border/50 overflow-hidden
-               hover:border-primary/30 hover:shadow-[0_0_30px_hsl(217_91%_60%/0.12)] transition-all duration-400"
-  >
+           hover:border-primary/30 hover:shadow-[0_0_30px_hsl(217_91%_60%/0.12)] transition-all duration-400">
+    
     {/* Gradient top accent line */}
     <div
       className="h-[2px] w-full"
@@ -136,7 +136,7 @@ const ProjectCard = ({
       )}
 
       {/* Description */}
-      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-1 line-clamp-3 sm:line-clamp-none">
+      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed flex-1">
         {project.description}
       </p>
 

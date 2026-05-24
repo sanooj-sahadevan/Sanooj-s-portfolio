@@ -1,92 +1,102 @@
-import { FiMail, FiPhone, FiMapPin, FiSend } from "react-icons/fi";
+import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 
 const Contact = () => {
     return (
         <section id="contact" className="py-24 relative overflow-hidden">
             <div className="section-container">
-                <div className="mb-12">
-                    <p className="text-primary text-sm tracking-[0.2em] uppercase mb-2 font-body">Get In Touch</p>
-                    <h2 className="text-3xl md:text-4xl font-heading font-bold">
-                        Let's <span className="gradient-text">Connect</span>
+                <div className="mb-14 text-center">
+                    <p className="text-primary text-sm tracking-[0.25em] uppercase mb-3 font-body">
+                        Get In Touch
+                    </p>
+
+                    <h2 className="text-3xl md:text-5xl font-heading font-bold leading-tight">
+                        Let’s <span className="gradient-text">Connect</span>
                     </h2>
+
+                    <p className="text-muted-foreground mt-5 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+                        Open for freelance projects, full-time opportunities, and
+                        collaborations. Feel free to reach out anytime.
+                    </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-10 md:gap-12">
-                    <div className="space-y-6 md:space-y-8">
-                        <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-                            I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-                        </p>
+                <div className="grid lg:grid-cols-2 gap-10 items-center">
+                    {/* LEFT SIDE */}
+                    <div className="space-y-6">
+                        {[
+                            {
+                                icon: FiMail,
+                                label: "Email",
+                                value: "sanusahadev007@gmail.com",
+                                href: "mailto:sanusahadev007@gmail.com",
+                            },
+                            {
+                                icon: FiPhone,
+                                label: "Phone",
+                                value: "+91 7994811405",
+                                href: "tel:+917994811405",
+                            },
+                            {
+                                icon: FiMapPin,
+                                label: "Location",
+                                value: "India",
+                                href: "#",
+                            },
+                        ].map((item) => (
+                            <a
+                                key={item.label}
+                                href={item.href}
+                                className="group flex items-center gap-5 p-5 rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm hover:border-primary/50 hover:translate-y-[-2px] transition-all duration-300"
+                            >
+                                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                                    <item.icon size={22} />
+                                </div>
 
-                        <div className="space-y-4 sm:space-y-6">
-                            {[
-                                { icon: FiMail, label: "Email", value: "sanusahadev007@gmail.com", href: "mailto:sanusahadev007@gmail.com" },
-                                { icon: FiPhone, label: "Phone", value: "+91 7994811405", href: "tel:+917994811405" },
-                                { icon: FiMapPin, label: "Location", value: "India", href: "#" },
-                            ].map((item) => (
-                                <a
-                                    key={item.label}
-                                    href={item.href}
-                                    className="flex items-center gap-4 p-3 sm:p-4 rounded-xl border border-border/50 bg-card hover:border-primary/50 transition-all group"
-                                >
-                                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                                        <item.icon size={18} />
-                                    </div>
-                                    <div className="min-w-0">
-                                        <p className="text-[10px] text-muted-foreground uppercase tracking-widest leading-none mb-1">{item.label}</p>
-                                        <p className="text-sm sm:text-base text-foreground font-medium truncate">{item.value}</p>
-                                    </div>
-                                </a>
-                            ))}
-                        </div>
+                                <div>
+                                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-1">
+                                        {item.label}
+                                    </p>
+
+                                    <p className="text-base sm:text-lg font-medium text-foreground">
+                                        {item.value}
+                                    </p>
+                                </div>
+                            </a>
+                        ))}
                     </div>
 
-                    <div className="glow-card p-6 sm:p-8">
-                        <form className="space-y-5 sm:space-y-6" onSubmit={(e) => e.preventDefault()}>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-xs sm:text-sm font-medium text-muted-foreground">Name</label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg bg-muted border border-border/50 focus:border-primary outline-none transition-all placeholder:text-muted-foreground/30 text-sm"
-                                        placeholder="John Doe"
-                                        required
+                    {/* RIGHT SIDE */}
+                    <div className="relative">
+                        <div className="rounded-3xl border border-green-500/30 bg-card/70 backdrop-blur-md p-8 sm:p-10 shadow-2xl">
+                            <div className="flex flex-col items-center text-center">
+                                <div className="w-24 h-24 rounded-full border-2 border-green-500 flex items-center justify-center mb-6 bg-green-500/10">
+                                    <FaWhatsapp
+                                        className="text-green-500"
+                                        size={50}
                                     />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-xs sm:text-sm font-medium text-muted-foreground">Email</label>
-                                    <input
-                                        type="email"
-                                        className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg bg-muted border border-border/50 focus:border-primary outline-none transition-all placeholder:text-muted-foreground/30 text-sm"
-                                        placeholder="john@example.com"
-                                        required
-                                    />
-                                </div>
+
+                                <h3 className="text-2xl sm:text-3xl font-bold mb-4">
+                                    Contact on WhatsApp
+                                </h3>
+
+                                <p className="text-muted-foreground leading-relaxed max-w-md mb-8 text-sm sm:text-base">
+                                    Fastest way to connect with me. Send your
+                                    project details or any opportunity directly
+                                    on WhatsApp.
+                                </p>
+
+                                <a
+                                    href="https://wa.me/917994811405"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl border-2 border-green-500 text-green-500 font-semibold text-base hover:bg-green-500 hover:text-white transition-all duration-300 shadow-lg hover:scale-[1.02]"
+                                >
+                                    <FaWhatsapp size={24} />
+                                    Chat on WhatsApp
+                                </a>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-xs sm:text-sm font-medium text-muted-foreground">Subject</label>
-                                <input
-                                    type="text"
-                                    className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg bg-muted border border-border/50 focus:border-primary outline-none transition-all placeholder:text-muted-foreground/30 text-sm"
-                                    placeholder="Project Inquiry"
-                                    required
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-xs sm:text-sm font-medium text-muted-foreground">Message</label>
-                                <textarea
-                                    className="w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg bg-muted border border-border/50 focus:border-primary outline-none transition-all min-h-[120px] sm:min-h-[150px] resize-none placeholder:text-muted-foreground/30 text-sm"
-                                    placeholder="Tell me about your project..."
-                                    required
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="glow-button w-full flex items-center justify-center gap-2 py-3"
-                            >
-                                Send Message
-                                <FiSend size={18} />
-                            </button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
