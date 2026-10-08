@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { skills, developerTools } from "@/data/portfolio";
+import { skills } from "@/data/portfolio";
 import { motion } from "framer-motion";
 
 const TechMarquee = () => {
@@ -8,7 +8,6 @@ const TechMarquee = () => {
     Object.values(skills).forEach((list) => {
       list.forEach((t) => techSet.add(t));
     });
-    developerTools.forEach((t) => techSet.add(t));
     return Array.from(techSet);
   }, []);
 

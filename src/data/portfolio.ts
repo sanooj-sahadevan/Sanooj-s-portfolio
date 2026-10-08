@@ -176,16 +176,15 @@ export const skills = {
     "Razorpay",
     "PayU",
   ],
+  "Developer Tools": [
+    "VS Code",
+    "Git",
+    "GitHub Actions",
+    "Postman",
+    "Cursor",
+    "Figma",
+  ],
 };
-
-export const developerTools = [
-  "VS Code",
-  "Git",
-  "GitHub Actions",
-  "Postman",
-  "Cursor",
-  "Figma",
-];
 
 export const experience = [
   {
