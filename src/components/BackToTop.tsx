@@ -6,8 +6,18 @@ const BackToTop = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 400);
-    window.addEventListener("scroll", onScroll);
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setVisible(window.scrollY > 400);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -19,7 +29,7 @@ const BackToTop = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-24 right-6 z-50 p-3 rounded-full border border-border/50 bg-card/80 backdrop-blur-lg text-primary hover:border-primary/50 hover:shadow-[0_0_20px_hsl(217_91%_60%/0.3)] transition-all duration-300"
+          className="fixed bottom-24 right-6 z-50 p-3 rounded-full border border-border/50 bg-card/90 backdrop-blur-sm text-primary hover:border-primary/50 hover:shadow-[0_0_20px_hsl(217_91%_60%/0.3)] transition-colors duration-200"
           aria-label="Back to top"
         >
           <FiArrowUp size={20} />

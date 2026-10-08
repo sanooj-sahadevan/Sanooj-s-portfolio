@@ -28,6 +28,7 @@ const Contributions = ({ items }: { items: string[] }) => {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
             className="mt-3 space-y-2 overflow-hidden"
           >
             {items.map((c, i) => (
@@ -54,15 +55,13 @@ const ProjectCard = ({
   isCompany: boolean;
 }) => (
   <motion.div
-    layout
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: 15 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-    whileHover={{ y: -5 }}
+    viewport={{ once: true, margin: "-40px" }}
+    transition={{ duration: 0.4, delay: Math.min(index * 0.06, 0.24) }}
     className="project-card group relative flex flex-col rounded-2xl bg-card border border-border/50 overflow-hidden
-           hover:border-primary/30 hover:shadow-[0_0_30px_hsl(217_91%_60%/0.12)] transition-all duration-400">
-    
+           hover:border-primary/30 hover:shadow-[0_0_30px_hsl(217_91%_60%/0.12)] hover:-translate-y-1 transition-all duration-300"
+  >
     {/* Gradient top accent line */}
     <div
       className="h-[2px] w-full"
@@ -81,7 +80,7 @@ const ProjectCard = ({
           <span className="text-[10px] sm:text-[11px] font-mono text-muted-foreground/50 mb-1 block">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <h3 className="text-sm sm:text-base font-heading font-semibold text-foreground leading-snug group-hover:text-primary transition-colors duration-300 line-clamp-1">
+          <h3 className="text-sm sm:text-base font-heading font-semibold text-foreground leading-snug group-hover:text-primary transition-colors duration-200 line-clamp-1">
             {project.title}
           </h3>
         </div>
@@ -95,7 +94,7 @@ const ProjectCard = ({
               rel="noopener noreferrer"
               className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg border border-border/60
                          text-muted-foreground hover:text-primary hover:border-primary/50
-                         hover:bg-primary/5 transition-all duration-200"
+                         hover:bg-primary/5 transition-colors duration-200"
               title="View on GitHub"
             >
               <FiGithub size={13} />
@@ -108,7 +107,7 @@ const ProjectCard = ({
               rel="noopener noreferrer"
               className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg border border-border/60
                          text-muted-foreground hover:text-primary hover:border-primary/50
-                         hover:bg-primary/5 transition-all duration-200"
+                         hover:bg-primary/5 transition-colors duration-200"
               title="View Live"
             >
               <FiExternalLink size={13} />
@@ -153,7 +152,7 @@ const ProjectCard = ({
           <span
             key={t}
             className="text-[9px] sm:text-[11px] px-1.5 sm:px-2 py-0.5 rounded-md bg-muted text-muted-foreground border border-border/50
-                       hover:border-primary/30 hover:text-primary transition-colors duration-200"
+                       hover:border-primary/30 hover:text-primary transition-colors duration-150"
           >
             {t}
           </span>
@@ -179,7 +178,7 @@ const TabBtn = ({
 }) => (
   <button
     onClick={onClick}
-    className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-250
+    className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200
       ${active
         ? "bg-primary text-primary-foreground shadow-[0_0_20px_hsl(217_91%_60%/0.35)]"
         : "bg-card border border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/30"
@@ -210,7 +209,7 @@ const Projects = () => {
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
         >
           <p className="text-primary text-sm tracking-[0.2em] uppercase mb-2 font-body">Portfolio</p>
           <div className="flex items-center gap-4 mb-2">
@@ -247,6 +246,7 @@ const Projects = () => {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
             className="flex items-center gap-2 mb-6"
           >
             <div className="h-px flex-1 bg-border/40" />
@@ -258,11 +258,8 @@ const Projects = () => {
         )}
 
         {/* Cards grid */}
-        <motion.div
-          layout
-          className="grid md:grid-cols-2 gap-5"
-        >
-          <AnimatePresence mode="popLayout">
+        <div className="grid md:grid-cols-2 gap-5">
+          <AnimatePresence mode="wait">
             {displayed.map((project, i) => (
               <ProjectCard
                 key={project.title}
@@ -272,7 +269,7 @@ const Projects = () => {
               />
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

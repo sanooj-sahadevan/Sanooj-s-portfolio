@@ -15,15 +15,27 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
+        scrolled
+          ? "bg-background/90 backdrop-blur-md border-b border-border/50 shadow-sm"
+          : "bg-transparent"
+      }`}
     >
       <div className="section-container flex items-center justify-between h-16">
         <motion.a
@@ -67,7 +79,7 @@ const Navbar = () => {
         {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden text-foreground"
+          className="md:hidden text-foreground p-2"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -82,8 +94,8 @@ const Navbar = () => {
             animate={{ opacity: 1, scaleY: 1 }}
             exit={{ opacity: 0, scaleY: 0 }}
             style={{ originY: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden bg-background/95 backdrop-blur-2xl border-b border-border/50 overflow-hidden"
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden bg-background/95 backdrop-blur-md border-b border-border/50 overflow-hidden"
           >
             <div className="flex flex-col p-6 gap-4">
               {navLinks.map((l, i) => (
@@ -91,20 +103,15 @@ const Navbar = () => {
                   key={l.href}
                   href={l.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group"
+                  className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors flex items-center justify-between group py-1"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + i * 0.1 }}
+                  transition={{ delay: 0.05 + i * 0.05 }}
                 >
                   {l.label}
-                  <div className="h-px flex-1 mx-4 bg-border/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <motion.span
-                    className="opacity-0 group-hover:opacity-100 transition-opacity"
-                    initial={{ x: -10 }}
-                    whileHover={{ x: 0 }}
-                  >
+                  <span className="text-primary opacity-0 group-hover:opacity-100 transition-opacity">
                     →
-                  </motion.span>
+                  </span>
                 </motion.a>
               ))}
               <motion.a
@@ -113,7 +120,7 @@ const Navbar = () => {
                 onClick={() => setMobileOpen(false)}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + navLinks.length * 0.1 }}
+                transition={{ delay: 0.3 }}
               >
                 Hire Me
               </motion.a>

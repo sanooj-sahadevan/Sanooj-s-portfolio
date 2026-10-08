@@ -46,7 +46,7 @@ const Hero = () => {
           className="text-primary font-body text-[10px] xs:text-xs sm:text-sm tracking-[0.3em] uppercase mb-4"
           variants={itemVariants}
         >
-          Full Stack MERN Developer
+          Full Stack Software Engineer
         </motion.p>
 
         <motion.h1
@@ -61,7 +61,7 @@ const Hero = () => {
           className="text-muted-foreground text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed px-4 sm:px-0"
           variants={itemVariants}
         >
-          I’m a full‑stack MERN developer crafting scalable, secure, and high‑performance web applications
+          Full Stack Engineer crafting production web applications with React, Next.js, Node.js, and NestJS. Shipped healthcare platforms, AI publishing pipelines, and real-time systems on AWS.
         </motion.p>
 
         <motion.div
@@ -72,14 +72,10 @@ const Hero = () => {
             View Projects
           </a>
           <a
-            href="/Sanooj-Resume.pdf"
-            download="Sanooj-S-Resume.pdf"
+            href="https://drive.google.com/drive/folders/1JDwTQyTOZURGlWd5PCjdir3hzjiJ_kN2?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
             className="outline-glow-button text-center"
-            onClick={(event) => {
-              if (!window.confirm("Do you want to download my resume?")) {
-                event.preventDefault();
-              }
-            }}
           >
             Download Resume
           </a>
